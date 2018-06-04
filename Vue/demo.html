@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My first Vue app</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+    .show {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+    }
+
+    .view {
+        width: 300px;
+        height: 30px;
+        border: 1px solid;
+        margin: 20px auto;
+        line-height: 30px;
+        text-align: center;
+    }
+
+    .active {
+        background: red;
+        color: white;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <p v-text="message"></p>
+        <p v-html="message"></p>
+        <p v-text="title"></p>
+        <p v-html="title"></p>
+        <p class="show"></p>
+        <p class="show" v-if=false></p>
+        <!---不s渲染-->
+        <p class="show" @click="run"></p>
+        <p class="show" @click="speak"></p>
+        <p class="show" @click="add">{{strFN}}</p>
+        <!---渲染不演示-->
+        <img :src="imgName" />
+        <div class="view" v-bind:class="{active:isactive}">
+            {{message}}
+        </div>
+        <ul>
+            <li v-for="item in array">
+                {{item}}
+            </li>
+        </ul>
+    </div>
+    <script>
+    var app = new Vue({
+        el: '#app', //vue挂载点
+        data: {
+            message: 'Hello Vue!', //自定义数据
+            title: "<h2>command</h2>",
+            array: ['html', 'CSS', 'JS'],
+            imgName: "app.png",
+            isactive: false,
+            i: 0
+        },
+        methods: {
+            speak: function() {
+                alert("hello");
+            },
+            run: function() {
+                alert("run");
+            },
+            add: function() {
+                this.i++;
+                console.log(this.i);
+            }
+        },
+        computed: {
+            strFN: function() {
+                if (this.i <= 5) {
+                    return "come on";
+                }
+            }
+        },
+		watch:{
+			i:function(newValue,oldValue){
+				console.log(newValue,oldValue);
+			}
+		}
+    });
+    </script>
+</body>
+
+</html>
